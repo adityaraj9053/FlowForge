@@ -5,11 +5,16 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import '../models/user_model.dart';
 import '../../core/constants/app_constants.dart';
 
+/// Shared Firebase access layer for the FlowForge app.
+///
+/// This wrapper centralizes Firestore and Authentication access so the rest of
+/// the app can reuse the same collection patterns and user-document handling.
 class FirebaseService {
   static FirebaseAuth get auth => FirebaseAuth.instance;
   static FirebaseFirestore get firestore => FirebaseFirestore.instance;
 
-  // Initialize Firebase
+  // Initializes Firebase and enables the local persistence settings used by the
+  // Firestore-backed app so offline reads and writes behave as expected.
   static Future<void> initialize() async {
     await Firebase.initializeApp();
 
@@ -45,7 +50,8 @@ class FirebaseService {
     }
   }
 
-  // Get user document from the canonical users collection.
+  // Reads a single user document from the canonical users collection.
+  // This is the main lookup used by project, task, and invitation services.
   static Future<UserModel?> getUserData(String userId) async {
     try {
       final doc = await findUserDocument(userId);
@@ -89,7 +95,8 @@ class FirebaseService {
     }
   }
 
-  // Get user by email from the canonical users collection only.
+  // Looks up a user by normalized email address so invites and project ownership
+  // can be resolved even when a direct uid is not yet known.
   static Future<UserModel?> getUserByEmail(String email) async {
     try {
       final query =

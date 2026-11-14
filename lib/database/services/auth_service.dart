@@ -5,10 +5,16 @@ import '../models/user_model.dart';
 import '../../core/constants/app_constants.dart';
 import 'firebase_service.dart';
 
+/// Authentication entry point for the application.
+///
+/// This layer encapsulates Firebase auth operations and translates low-level
+/// Firebase exceptions into user-friendly messages used by the login and
+/// registration flows.
 class AuthService {
   static final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Sign in with email and password
+  // Sign in with email and password.
+  // This is the primary login path for both managers and employees.
   static Future<UserCredential> signInWithEmailAndPassword(
     String email,
     String password,
@@ -50,7 +56,8 @@ class AuthService {
     }
   }
 
-  // Send password reset email
+  // Sends a password-reset email after normalizing the address.
+  // This keeps input consistent and avoids duplicate or mismatched account lookups.
   static Future<void> sendPasswordResetEmail(String email) async {
     final normalizedEmail = email.trim().toLowerCase();
     if (normalizedEmail.isEmpty) {
@@ -92,6 +99,7 @@ class AuthService {
 
   // Best-effort verification email to the currently signed-in user.
   // Never blocks registration; the user can resend from the verify screen.
+  // A failure here only impacts the email delivery, not the auth state itself.
   static Future<void> sendVerificationEmail() async {
     try {
       await _auth.currentUser?.sendEmailVerification();

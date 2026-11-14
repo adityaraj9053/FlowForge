@@ -4,6 +4,11 @@ import '../models/project_invitation_model.dart';
 
 part 'project_invitation.responses.dart';
 
+/// Backend workflow for project invitations and in-app notifications.
+///
+/// This service owns the invitation lifecycle, keeps the pending/accepted/declined
+/// states consistent, and pushes notifications to the target employee when a
+/// project action requires attention.
 class ProjectInvitationService {
   final FirebaseFirestore _db;
 
@@ -19,6 +24,10 @@ class ProjectInvitationService {
   String invitationDocId(String projectId, String employeeId) =>
       '${projectId}_$employeeId';
 
+  /// Creates a project invitation and notifies the employee of the request.
+  ///
+  /// The invitation id is deterministic so repeated sends for the same project and
+  /// employee can be checked without creating duplicates.
   Future<String> sendInvitation({
     required String projectId,
     required String projectTitle,
@@ -77,6 +86,10 @@ class ProjectInvitationService {
     return invitationId;
   }
 
+  /// Writes a notification document for the target user.
+  ///
+  /// This helper is reused across invitations, task assignment, and update events
+  /// so the UI can render a single unified notification stream.
   Future<void> createNotification({
     required String userId,
     required String type,

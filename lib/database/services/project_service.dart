@@ -13,6 +13,11 @@ import 'manager_update_service.dart';
 part 'project_service.queries.dart';
 part 'project_service.merged.dart';
 
+/// Handles the project lifecycle for manager and client views.
+///
+/// Most project data is stored in a manager-owned collection and mirrored into a
+/// client-facing collection so the same project can be queried efficiently from
+/// either role without duplicating the domain logic elsewhere.
 class ProjectService {
   final FirebaseFirestore _db;
   ProjectService({FirebaseFirestore? db})
@@ -23,6 +28,11 @@ class ProjectService {
   CollectionReference<Map<String, dynamic>> get _clientProjects =>
       _db.collection(AppConstants.collectionClientsProjects);
 
+  /// Creates a project record in both the manager and client collections.
+  ///
+  /// The manager-side document is the canonical record and the client-side copy is
+  /// kept in sync so dashboard screens can load project data without a cross-role
+  /// lookup.
   Future<String> createProject({
     required String title,
     required String description,
@@ -106,6 +116,10 @@ class ProjectService {
     return doc.id;
   }
 
+  /// Resolves a project client by either a direct user id or a normalized email.
+  ///
+  /// The service accepts whichever identifier is available and returns the user's
+  /// canonical data when it belongs to a client account.
   Future<(String?, String?)> _resolveClient({
     String? clientId,
     String? clientEmail,
@@ -129,6 +143,10 @@ class ProjectService {
     return (id, email);
   }
 
+  /// Mirrors the most important project fields into the client collection.
+  ///
+  /// Some properties are intentionally excluded here because they are manager-only
+  /// or are not needed for client-facing screens.
   Future<void> updateProject(
     String projectId,
     Map<String, dynamic> data,

@@ -8,6 +8,11 @@ import 'work_update_service.dart';
 part 'task_service.progress.dart';
 part 'task_service.maintenance.dart';
 
+/// TaskService coordinates the task lifecycle across manager and employee views.
+///
+/// Firestore data is intentionally split so managers can track full project work
+/// while assignees receive a filtered task stream that only includes work assigned
+/// to them.
 class TaskService {
   final FirebaseFirestore _db;
   TaskService({FirebaseFirestore? db}) : _db = db ?? FirebaseFirestore.instance;
@@ -17,6 +22,10 @@ class TaskService {
   CollectionReference<Map<String, dynamic>> get _empTasks =>
       _db.collection(AppConstants.collectionEmployeesTasks);
 
+  /// Streams every task for a specific project in chronological order.
+  ///
+  /// The manager-side task collection is the source of truth and is used by all
+  /// project screens that need a complete work breakdown.
   Stream<List<TaskModel>> streamTasksForProject(String projectId) {
     if (projectId.isEmpty) return Stream.value(const <TaskModel>[]);
     return _mgrTasks
@@ -39,6 +48,10 @@ class TaskService {
         );
   }
 
+  /// Creates a task and mirrors it to the employee collection when it is assigned.
+  ///
+  /// This keeps the manager's detailed task record and the employee-facing task
+  /// record aligned while also notifying the assignee about the assignment.
   Future<String> createTask({
     required String title,
     required String description,
@@ -81,6 +94,11 @@ class TaskService {
     return doc.id;
   }
 
+  /// Marks a task as done on both task collections.
+  ///
+  /// The manager record is updated first, then the employee view is synced if it
+  /// exists. The employee-side update is wrapped in a try/catch because some task
+  /// records may not have a duplicate document yet.
   Future<void> completeTask(String taskId) async {
     final payload = {
       'status': AppConstants.statusDone,

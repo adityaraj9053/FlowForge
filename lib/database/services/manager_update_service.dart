@@ -5,6 +5,10 @@ import '../../core/constants/app_constants.dart';
 import '../models/manager_update_model.dart';
 import 'project_invitation_service.dart';
 
+/// Publishes manager progress updates for clients and project stakeholders.
+///
+/// These updates are stored separately from project data so clients can stream a
+/// dedicated timeline without mixing it into the operational task records.
 class ManagerUpdateService {
   final FirebaseFirestore _db;
   ManagerUpdateService({FirebaseFirestore? db})
@@ -13,6 +17,11 @@ class ManagerUpdateService {
   CollectionReference<Map<String, dynamic>> get _updates =>
       _db.collection(AppConstants.collectionManagerUpdates);
 
+  /// Stores a manager update and emits a client notification.
+  ///
+  /// Client notifications are sent only when a client id exists, which keeps the
+  /// update flow relevant for external stakeholders without creating noise for
+  /// internal-only project records.
   Future<void> createUpdate({
     required String projectId,
     required String clientId,
@@ -46,6 +55,10 @@ class ManagerUpdateService {
     }
   }
 
+  /// Streams all updates for a client, merging both id and email-based lookups.
+  ///
+  /// Some older records may reference the email rather than the uid, so the merge
+  /// keeps both identifiers active during reads.
   Stream<List<ManagerUpdateModel>> streamUpdatesForClient(
     String clientId, {
     String? clientEmail,

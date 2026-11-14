@@ -1,0 +1,10 @@
+<<<<<<< HEAD
+{"firestore":{"rules":"firestore.rules","indexes":"firestore.indexes.json"},"flutter":{"platforms":{"android":{"default":{"projectId":"flowforge-a21d8","appId":"1:1074995737633:android:3a66b34bb8fda3a6f55f60","fileOutput":"android/app/google-services.json"}},"dart":{"lib/firebase_options.dart":{"projectId":"flowforge-a21d8","configurations":{"android":"1:1074995737633:android:3a66b34bb8fda3a6f55f60","ios":"1:1074995737633:ios:397c3749e20f7f71f55f60","macos":"1:1074995737633:ios:397c3749e20f7f71f55f60","web":"1:1074995737633:web:4861940cf12eca0ef55f60","windows":"1:1074995737633:web:51f67ff48e178675f55f60"}}}}}}
+=======
+{
+  "firestore": {
+    "rules": "firestore.rules",
+    "indexes": "firestore.indexes.json"
+  }
+}
+>>>>>>> 718cc7ec2ded39f1cc39b169000c96f7e96d29d4

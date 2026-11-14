@@ -1,0 +1,13 @@
+{
+  "projects": {
+<<<<<<< HEAD
+    "default": "flowforge-a21d8"
+  }
+}
+=======
+    "sprintflow": "sprintflow-652d0"
+  },
+  "targets": {},
+  "etags": {}
+}
+>>>>>>> 718cc7ec2ded39f1cc39b169000c96f7e96d29d4

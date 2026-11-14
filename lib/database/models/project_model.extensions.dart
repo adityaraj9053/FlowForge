@@ -14,7 +14,7 @@ extension ProjectModelSerialization on ProjectModel {
       'clientEmail': clientEmail,
       'createdAt': Timestamp.fromDate(createdAt),
       'startDate': startDate != null ? Timestamp.fromDate(startDate!) : null,
-      'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
+      'updatedAt': updatedAt != null ?  Timestamp.fromDate(updatedAt!) : null,
       'expectedFinish':
           expectedFinish != null ? Timestamp.fromDate(expectedFinish!) : null,
       'actualFinish':
@@ -28,7 +28,7 @@ extension ProjectModelSerialization on ProjectModel {
       'overdueTasks': overdueTasks,
       'isPublic': isPublic,
       'isArchived': isArchived,
-      'projectLogo': projectLogo,
+      'projectLogo': projectLogo, 
       'projectColor': projectColor,
       'shareProgressWithClient': shareProgressWithClient,
       'shareMilestonesWithClient': shareMilestonesWithClient,
@@ -41,7 +41,7 @@ extension ProjectModelSerialization on ProjectModel {
   // Copy with method
   ProjectModel copyWith({
     String? id,
-    String? title,
+    String? title, 
     String? description,
     String? status,
     String? managerId,
@@ -56,7 +56,7 @@ extension ProjectModelSerialization on ProjectModel {
     List<String>? sprints,
     List<String>? milestones,
     double? progressPercentage,
-    int? totalTasks,
+    int? totalTasks, 
     int? completedTasks,
     int? overdueTasks,
     bool? isPublic,
@@ -75,7 +75,7 @@ extension ProjectModelSerialization on ProjectModel {
       description: description ?? this.description,
       status: status ?? this.status,
       managerId: managerId ?? this.managerId,
-      clientId: clientId ?? this.clientId,
+      clientId: clientId ?? this.clientId, 
       clientEmail: clientEmail ?? this.clientEmail,
       createdAt: createdAt ?? this.createdAt,
       startDate: startDate ?? this.startDate,
@@ -95,7 +95,7 @@ extension ProjectModelSerialization on ProjectModel {
       projectColor: projectColor ?? this.projectColor,
       shareProgressWithClient:
           shareProgressWithClient ?? this.shareProgressWithClient,
-      shareMilestonesWithClient:
+      shareMilestonesWithClient:  
           shareMilestonesWithClient ?? this.shareMilestonesWithClient,
       shareFilesWithClient: shareFilesWithClient ?? this.shareFilesWithClient,
       analytics: analytics ?? this.analytics,

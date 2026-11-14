@@ -56,10 +56,12 @@ class ProjectInvitationModel {
       'managerName': managerName,
       'employeeId': employeeId,
       'employeeEmail': employeeEmail,
+
       'employeeName': employeeName,
       'status': status,
       'createdAt': Timestamp.fromDate(createdAt),
       'respondedAt':
+
           respondedAt != null ? Timestamp.fromDate(respondedAt!) : null,
     };
   }
@@ -82,10 +84,12 @@ class ProjectInvitationModel {
       projectId: projectId ?? this.projectId,
       projectTitle: projectTitle ?? this.projectTitle,
       managerId: managerId ?? this.managerId,
+
       managerName: managerName ?? this.managerName,
       employeeId: employeeId ?? this.employeeId,
       employeeEmail: employeeEmail ?? this.employeeEmail,
       employeeName: employeeName ?? this.employeeName,
+      
       status: status ?? this.status,
       createdAt: createdAt ?? this.createdAt,
       respondedAt: respondedAt ?? this.respondedAt,

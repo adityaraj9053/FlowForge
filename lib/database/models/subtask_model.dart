@@ -1,8 +1,9 @@
+
 import 'package:cloud_firestore/cloud_firestore.dart';
 
 // SubTask class for task breakdown
 class SubTask {
-  final String id;
+  final String  id;
   final String title;
   final bool isCompleted;
   final DateTime? completedAt;
@@ -21,6 +22,7 @@ class SubTask {
       isCompleted: map['isCompleted'] ?? false,
       completedAt:
           map['completedAt'] != null
+
               ? (map['completedAt'] as Timestamp).toDate()
               : null,
     );
@@ -31,6 +33,7 @@ class SubTask {
       'id': id,
       'title': title,
       'isCompleted': isCompleted,
+
       'completedAt':
           completedAt != null ? Timestamp.fromDate(completedAt!) : null,
     };
@@ -39,7 +42,7 @@ class SubTask {
   SubTask copyWith({
     String? id,
     String? title,
-    bool? isCompleted,
+    bool?isCompleted,
     DateTime? completedAt,
   }) {
     return SubTask(

@@ -19,6 +19,8 @@ class UserModel {
   // Role-specific fields
   final String? managerId; // For employees - who created their account
   final List<String>
+
+
   assignedProjects; // For employees - projects they're assigned to
   final List<String> managedProjects; // For managers - projects they manage
   final List<String> clientProjects; // For clients - projects they can view
@@ -61,6 +63,7 @@ class UserModel {
     this.position,
     this.hireDate,
     this.performanceRating,
+
     this.managedEmployees = const [],
     this.managedClients = const [],
     this.companyName,
@@ -79,6 +82,7 @@ class UserModel {
       role: data['role'] ?? AppConstants.roleEmployee,
       avatarUrl: data['avatarUrl'],
       bio: data['bio'],
+
       phone: data['phone'],
       createdAt: (data['createdAt'] as Timestamp?)?.toDate() ?? DateTime.now(),
       lastLoginAt:
@@ -96,7 +100,7 @@ class UserModel {
       position: data['position'],
       hireDate:
           data['hireDate'] != null
-              ? (data['hireDate'] as Timestamp).toDate()
+              ? (data['hireDate'] as  Timestamp).toDate()
               : null,
       performanceRating: data['performanceRating']?.toDouble(),
       managedEmployees: List<String>.from(data['managedEmployees'] ?? []),
@@ -119,5 +123,5 @@ class UserModel {
   }
 
   @override
-  int get hashCode => id.hashCode;
+  int get hashCode =>  id.hashCode;
 }

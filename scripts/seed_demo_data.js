@@ -1,9 +1,38 @@
 // SprintFlow Demo Data Seeding Script
 // Populates Authentication accounts and rich Firestore data for Manager, Employee, and Client dashboards.
 
-const API_KEY = 'AIzaSyCUhq7P5Mt4-aJmN5tMSo9pxyMzJJxGf88';
-const PROJECT_ID = 'flowforge-a21d8';
+const fs = require('fs');
+const path = require('path');
+
+// Dynamically load .env if available without hardcoding credentials
+try {
+  const envPath = path.resolve(__dirname, '..', '.env');
+  if (fs.existsSync(envPath)) {
+    const envLines = fs.readFileSync(envPath, 'utf8').split(/\r?\n/);
+    for (const line of envLines) {
+      const match = line.match(/^\s*([\w.-]+)\s*=\s*(.*)?\s*$/);
+      if (match) {
+        const key = match[1];
+        let val = (match[2] || '').trim();
+        if ((val.startsWith('"') && val.endsWith('"')) || (val.startsWith("'") && val.endsWith("'"))) {
+          val = val.slice(1, -1);
+        }
+        if (!process.env[key]) {
+          process.env[key] = val;
+        }
+      }
+    }
+  }
+} catch (_) {}
+
+const API_KEY = process.env.FIREBASE_WEB_API_KEY || process.env.API_KEY || process.env.API;
+const PROJECT_ID = process.env.FIREBASE_PROJECT_ID || 'flowforge-a21d8';
 const FIRESTORE_BASE = `https://firestore.googleapis.com/v1/projects/${PROJECT_ID}/databases/(default)/documents`;
+
+if (!API_KEY) {
+  console.error('Error: Firebase API key not found. Please set FIREBASE_WEB_API_KEY or API in .env or your environment.');
+  process.exit(1);
+}
 
 function toFirestoreValue(val) {
   if (val === null || val === undefined) return { nullValue: null };

@@ -2,27 +2,30 @@
 //
 // Service worker used by `firebase_messaging` to receive messages while your
 // web app is in the background. A service worker cannot read
-// `firebase_options.dart`, so the Firebase configuration is duplicated here.
-//
-// Running `flutterfire configure` again refreshes everything above the marker
-// at the bottom of this file, and keeps what is below it. Remove the header
-// above to take ownership of the whole file and the CLI will leave it alone.
+// `firebase_options.dart`, so the Firebase configuration is dynamically initialized here.
 //
 // See https://firebase.google.com/docs/cloud-messaging/flutter/receive#web
 
 importScripts('https://www.gstatic.com/firebasejs/11.9.1/firebase-app-compat.js');
 importScripts('https://www.gstatic.com/firebasejs/11.9.1/firebase-messaging-compat.js');
 
-firebase.initializeApp({
-  "apiKey": "AIzaSyCUhq7P5Mt4-aJmN5tMSo9pxyMzJJxGf88",
-  "appId": "1:1074995737633:web:4861940cf12eca0ef55f60",
-  "messagingSenderId": "1074995737633",
-  "projectId": "flowforge-a21d8",
-  "authDomain": "flowforge-a21d8.firebaseapp.com",
-  "storageBucket": "flowforge-a21d8.firebasestorage.app",
-  "measurementId": "G-F459XSL574"
-});
+// Read Firebase configuration dynamically from query parameters if provided
+const urlParams = new URLSearchParams(self.location.search);
 
-const messaging = firebase.messaging();
+const firebaseConfig = {
+  apiKey: urlParams.get('apiKey') || '',
+  appId: urlParams.get('appId') || '',
+  messagingSenderId: urlParams.get('messagingSenderId') || '',
+  projectId: urlParams.get('projectId') || '',
+  authDomain: urlParams.get('authDomain') || '',
+  storageBucket: urlParams.get('storageBucket') || '',
+  measurementId: urlParams.get('measurementId') || ''
+};
+
+// Initialize only if a valid configuration is provided
+if (firebaseConfig.apiKey && firebaseConfig.appId) {
+  firebase.initializeApp(firebaseConfig);
+  const messaging = firebase.messaging();
+}
 
 // Your own code goes below this line. FlutterFire CLI does not touch it.

@@ -44,4 +44,18 @@ app.*.map.json
 /android/app/profile
 /android/app/release
 
-/sprint_flow/android/app/google-services.json
+# Environment variables & credentials
+.env
+.env.*
+*.env
+!.env.example
+
+# Native Firebase configuration credentials
+android/app/google-services.json
+ios/Runner/GoogleService-Info.plist
+macos/Runner/GoogleService-Info.plist
+
+# Key signing and secrets
+*.keystore
+*.jks
+key.properties

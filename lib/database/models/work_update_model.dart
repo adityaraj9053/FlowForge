@@ -45,7 +45,7 @@ class WorkUpdateModel {
       updatedAt:
           data['updatedAt'] != null
               ? (data['updatedAt'] as Timestamp).toDate()
-              : null,
+              : null, 
     );
   }
 
@@ -57,7 +57,7 @@ class WorkUpdateModel {
       'clientId': clientId,
       'clientEmail': clientEmail,
       'update': update,
-      'workHours': workHours,
+      'workHours': workHours, 
       'progressPercentage': progressPercentage,
       'createdAt': Timestamp.fromDate(createdAt),
       'updatedAt': updatedAt != null ? Timestamp.fromDate(updatedAt!) : null,
@@ -73,7 +73,7 @@ class WorkUpdateModel {
     String? clientEmail,
     String? update,
     int? workHours,
-    int? progressPercentage,
+    int? progressPercentage, 
     DateTime? createdAt,
     DateTime? updatedAt,
   }) {
@@ -88,7 +88,7 @@ class WorkUpdateModel {
       workHours: workHours ?? this.workHours,
       progressPercentage: progressPercentage ?? this.progressPercentage,
       createdAt: createdAt ?? this.createdAt,
-      updatedAt: updatedAt ?? this.updatedAt,
+      updatedAt: updatedAt ?? this.updatedAt, 
     );
   }
 }

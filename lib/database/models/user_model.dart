@@ -88,7 +88,7 @@ class UserModel {
       lastLoginAt:
           data['lastLoginAt'] != null
               ? (data['lastLoginAt'] as Timestamp).toDate()
-              : null,
+              : null, 
       isActive: data['isActive'] ?? true,
       isOnline: data['isOnline'] ?? false,
       managerId: data['managerId'],
@@ -97,17 +97,17 @@ class UserModel {
       clientProjects: List<String>.from(data['clientProjects'] ?? []),
       activeClients: List<String>.from(data['activeClients'] ?? []),
       department: data['department'],
-      position: data['position'],
-      hireDate:
+      position: data['position'], 
+      hireDate: 
           data['hireDate'] != null
               ? (data['hireDate'] as  Timestamp).toDate()
               : null,
       performanceRating: data['performanceRating']?.toDouble(),
       managedEmployees: List<String>.from(data['managedEmployees'] ?? []),
       managedClients: List<String>.from(data['managedClients'] ?? []),
-      companyName: data['companyName'],
+      companyName: data['companyName'], 
       companyLogo: data['companyLogo'],
-      contactPerson: data['contactPerson'],
+      contactPerson: data['contactPerson'], 
     );
   }
 
